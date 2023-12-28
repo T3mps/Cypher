@@ -39,12 +39,12 @@ workspace "Cypher"
         defines { "_CRT_SECURE_NO_WARNINGS", "CYPHER_EXPORTS" }
 
         filter "configurations:Debug"
-            defines { "Cypher_DEBUG" }
+            defines { "CYPHER_DEBUG" }
             runtime "Debug"
             symbols "on"
 
         filter "configurations:Release"
-            defines { "Cypher_RELEASE" }
+            defines { "CYPHER_RELEASE" }
             runtime "Release"
             optimize "on"
 

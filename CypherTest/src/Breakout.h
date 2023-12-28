@@ -327,12 +327,25 @@ struct Brick : public Entity
 class Level
 {
 public:
-	Level()
+	Level() : m_allocator()
 	{
-		m_entities.emplace_back(new Paddle());
-		m_entities.emplace_back(new Ball());
+		auto memory = m_allocator.Allocate(sizeof(Paddle));
+		auto paddle = new (memory) Paddle();
+		m_entities.emplace_back(paddle);
+
+		auto memory2 = m_allocator.Allocate(sizeof(Ball));
+		auto ball = new (memory2) Ball();
+		m_entities.emplace_back(ball);
 
 		GenerateBricks();
+	}
+
+	~Level()
+	{
+		for (void* entity : m_entities)
+		{
+			m_allocator.Deallocate(&entity);
+		}
 	}
 
 	void Update(float deltaTime)
@@ -343,7 +356,7 @@ public:
 			if (entity->IsActive())
 				entity->Update(deltaTime);
 
-			if (auto* brick = dynamic_cast<Brick*>(entity.get()))
+			if (auto* brick = dynamic_cast<Brick*>(entity))
 			{
 				if (brick->IsActive())
 					++activeBrickCount;
@@ -395,7 +408,10 @@ private:
 		{
 			float x = static_cast<float>(i % bricksPerRow) * brickWidth;
 			float y = WINDOW_HEIGHT * 0.2f + (i / bricksPerRow) * brickHeight;
-			m_entities.emplace_back(new Brick(x, y, brickWidth, brickHeight, colors[i / bricksPerRow]));
+
+			auto memory = m_allocator.Allocate(sizeof(Brick));
+			auto brick = new (memory) Brick(x, y, brickWidth, brickHeight, colors[i / bricksPerRow]);
+			m_entities.emplace_back(brick);
 		}
 	}
 
@@ -420,7 +436,7 @@ private:
 					if (impactTime && *impactTime < earliestImpactTime)
 					{
 						earliestImpactTime = *impactTime;
-						firstImpactEntity = b.get();
+						firstImpactEntity = b;
 						break;
 					}
 				}
@@ -443,7 +459,8 @@ private:
 		}
 	}
 
-	std::vector<std::unique_ptr<Entity>> m_entities;
+	std::vector<Entity*> m_entities;
+	Cypher::StackAllocator<> m_allocator;
 };
 
 Level level;

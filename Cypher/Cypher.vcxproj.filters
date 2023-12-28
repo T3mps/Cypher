@@ -1,23 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Container">
+      <UniqueIdentifier>{68AD6C08-D417-217F-1D56-D22489FFFED3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{60E1870B-CCEA-877C-5566-9E7CC16E937C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{BE94DDC2-AA36-0899-93F1-1BED7F328FE9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{23A78D7C-0FDE-8E0D-B8CA-7410A4E00A0F}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Common.h" />
     <ClInclude Include="src\Console.h" />
+    <ClInclude Include="src\Container\DenseArray.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Container\PackedArray.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Container\SparseSet.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\KeyCode.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Logger.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Cypher.h" />
-    <ClInclude Include="src\KeyCode.h" />
+    <ClInclude Include="src\ECS\Defines.h">
+      <Filter>ECS</Filter>
+    </ClInclude>
     <ClInclude Include="src\Math\AABB.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Math.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Vector2.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Memory\BlockAllocator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Memory\Memory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Memory\StackAllocator.h">
+      <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Animation.h">
       <Filter>Rendering</Filter>
@@ -31,6 +75,12 @@
     <ClInclude Include="src\Rendering\TextRenderer.h">
       <Filter>Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\Util\Exception.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\YCombinator.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Console.cpp" />
@@ -39,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="src\Math\Vector2.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\BlockAllocator.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\StackAllocator.cpp">
+      <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Animation.cpp">
       <Filter>Rendering</Filter>
