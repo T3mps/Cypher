@@ -8,19 +8,18 @@ workspace "Cypher"
 
     IncludeDir = {}
     IncludeDir["Cypher"] = "Cypher/src"
-    IncludeDir["entt"] = "Vendor/entt/"
-
-    group "Dependencies"
-        -- Dependency projects would go here
-
-    group ""
+    IncludeDir["jemalloc"] = "Vendor/jemalloc/include"
+    IncludeDir["spdlog"] = "Vendor/spdlog/include"
+    IncludeDir["glm"] = "Vendor/glm/include"
+    IncludeDir["entt"] = "Vendor/entt/single_include"
+    IncludeDir["box2d"] = "Vendor/box2d/include"
 
     project "Cypher"
         location "Cypher"
-        kind "SharedLib"  -- Changed from ConsoleApp to SharedLib
+        kind "StaticLib"
         language "C++"
         cppdialect "C++20"
-        staticruntime "off"  -- Usually, DLLs use a dynamic runtime
+        staticruntime "on"
 
         targetdir ("bin/" .. outputdir .. "/%{prj.name}")
         objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -33,10 +32,21 @@ workspace "Cypher"
 
         includedirs {
             "%{IncludeDir.Cypher}",
-            "%{IncludeDir.entt}"
+            "%{IncludeDir.jemalloc}",
+            "%{IncludeDir.spdlog}",
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.entt}",
+            "%{IncludeDir.box2d}"
         }
 
-        defines { "_CRT_SECURE_NO_WARNINGS", "CYPHER_EXPORTS" }
+        defines {
+            "_CRT_SECURE_NO_WARNINGS",
+            "CYPHER_EXPORTS"
+        }
+
+        postbuildcommands {
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Loom")
+        }
 
         filter "configurations:Debug"
             defines { "CYPHER_DEBUG" }
@@ -50,7 +60,7 @@ workspace "Cypher"
 
     project "CypherTest"
         location "CypherTest"
-        kind "ConsoleApp"
+        kind "SharedLib"
         language "C++"
         cppdialect "C++20"
         staticruntime "on"
@@ -66,7 +76,52 @@ workspace "Cypher"
 
         includedirs {
             "%{IncludeDir.Cypher}",
-            "%{IncludeDir.entt}"
+            "%{IncludeDir.jemalloc}",
+            "%{IncludeDir.spdlog}",
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.entt}",
+            "%{IncludeDir.box2d}"
+        }
+
+        links {
+            "Cypher"
+        }
+
+        defines {
+            "_CRT_SECURE_NO_WARNINGS",
+            "CYPHERTEST_EXPORTS"
+        }
+
+        postbuildcommands {
+            ("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Loom")
+        }
+
+        filter "configurations:Debug"
+            runtime "Debug"
+            symbols "on"
+
+        filter "configurations:Release"
+            runtime "Release"
+            optimize "on"
+
+    project "Loom"
+        location "Loom"
+        kind "ConsoleApp"
+        language "C++"
+        cppdialect "C++20"
+        staticruntime "on"
+
+        targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+        objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+        files {
+            "%{prj.location}/src/**.h",
+            "%{prj.location}/src/**.cpp",
+            "%{prj.location}/src/**.hpp"
+        }  
+
+        includedirs {
+            "%{IncludeDir.Cypher}"
         }
 
         links {

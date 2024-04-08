@@ -1,5 +1,5 @@
 #include "AABB.h"
 
-template class CYAPI Cypher::AABB<int>;
-template class CYAPI Cypher::AABB<float>;
-template class CYAPI Cypher::AABB<double>;
+template class Cypher::AABB<int>;
+template class Cypher::AABB<float>;
+template class Cypher::AABB<double>;

@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CypherTest", "CypherTest\Cy
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cypher", "Cypher\Cypher.vcxproj", "{306EF5AC-1C10-2083-05CB-33D7F10BA7D3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Loom", "Loom\Loom.vcxproj", "{3CA3887C-28DA-890D-D1C6-6F10BDDC050F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -19,6 +21,10 @@ Global
 		{306EF5AC-1C10-2083-05CB-33D7F10BA7D3}.Debug|x64.Build.0 = Debug|x64
 		{306EF5AC-1C10-2083-05CB-33D7F10BA7D3}.Release|x64.ActiveCfg = Release|x64
 		{306EF5AC-1C10-2083-05CB-33D7F10BA7D3}.Release|x64.Build.0 = Release|x64
+		{3CA3887C-28DA-890D-D1C6-6F10BDDC050F}.Debug|x64.ActiveCfg = Debug|x64
+		{3CA3887C-28DA-890D-D1C6-6F10BDDC050F}.Debug|x64.Build.0 = Debug|x64
+		{3CA3887C-28DA-890D-D1C6-6F10BDDC050F}.Release|x64.ActiveCfg = Release|x64
+		{3CA3887C-28DA-890D-D1C6-6F10BDDC050F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

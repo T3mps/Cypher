@@ -35,6 +35,9 @@
     <ClInclude Include="src\Container\SparseSet.h">
       <Filter>Container</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Application.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\KeyCode.h">
       <Filter>Core</Filter>
     </ClInclude>

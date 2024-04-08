@@ -4,6 +4,7 @@
 
 #include "Console.h"
 
+#include "Core/Application.h"
 #include "Core/KeyCode.h"
 #include "Core/Logger.h"
 

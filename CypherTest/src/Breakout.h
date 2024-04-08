@@ -327,15 +327,10 @@ struct Brick : public Entity
 class Level
 {
 public:
-	Level() : m_allocator()
+	Level()
 	{
-		auto memory = m_allocator.Allocate(sizeof(Paddle));
-		auto paddle = new (memory) Paddle();
-		m_entities.emplace_back(paddle);
-
-		auto memory2 = m_allocator.Allocate(sizeof(Ball));
-		auto ball = new (memory2) Ball();
-		m_entities.emplace_back(ball);
+		m_entities.emplace_back(new Paddle());
+		m_entities.emplace_back(new Ball());
 
 		GenerateBricks();
 	}
@@ -344,7 +339,7 @@ public:
 	{
 		for (void* entity : m_entities)
 		{
-			m_allocator.Deallocate(&entity);
+         delete entity;
 		}
 	}
 
@@ -408,10 +403,7 @@ private:
 		{
 			float x = static_cast<float>(i % bricksPerRow) * brickWidth;
 			float y = WINDOW_HEIGHT * 0.2f + (i / bricksPerRow) * brickHeight;
-
-			auto memory = m_allocator.Allocate(sizeof(Brick));
-			auto brick = new (memory) Brick(x, y, brickWidth, brickHeight, colors[i / bricksPerRow]);
-			m_entities.emplace_back(brick);
+			m_entities.emplace_back(new Brick(x, y, brickWidth, brickHeight, colors[i / bricksPerRow]));
 		}
 	}
 
@@ -460,22 +452,38 @@ private:
 	}
 
 	std::vector<Entity*> m_entities;
-	Cypher::StackAllocator<> m_allocator;
 };
 
-Level level;
-
-void Update(float deltaTime)
+class Game : public Cypher::Application
 {
-	level.Update(deltaTime);
-}
+public:
+   Game() : m_level()
+   {
+      m_config.windowTitle = L"Breakout";
+   }
 
-void FixedUpdate(float timeStep)
-{
-	level.FixedUpdate(timeStep);
-}
+	virtual ~Game() = default;
+   
+	bool Initialize() override
+	{
+		return true;
+	}
+   
+   void Update(float deltaTime) override
+   {
+      m_level.Update(deltaTime);
+   }
+	
+	void FixedUpdate(float timeStep) override
+	{
+		m_level.FixedUpdate(timeStep);
+	}
 
-void Render()
-{
-	level.Render();
-}
+   void Render() override
+   {
+      m_level.Render();
+   }
+   
+private:
+   Level m_level;
+};

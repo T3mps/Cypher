@@ -64,7 +64,7 @@ namespace Cypher
       Block* blocks;
    };
 
-   class CYAPI BlockAllocator
+   class BlockAllocator
    {
    public:
       BlockAllocator();

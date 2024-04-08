@@ -68,7 +68,7 @@ namespace Cypher
       bool m_committed;
    };
 
-   struct CYAPI StackEntry
+   struct StackEntry
    {
       char* data = nullptr;
       bool usedMalloc = false;
