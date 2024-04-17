@@ -213,11 +213,11 @@ public:
 		newSpeed = std::clamp(newSpeed, MIN_SPEED, MAX_SPEED);
 
 		ballVelocity.Normalize();
-		ballVelocity.x *= newSpeed;
-		ballVelocity.y *= newSpeed;
+		ballVelocity.x() *= newSpeed;
+		ballVelocity.y() *= newSpeed;
 
-		m_dx = ballVelocity.x;
-		m_dy = ballVelocity.y;
+		m_dx = ballVelocity.x();
+		m_dy = ballVelocity.y();
 		float remainingTime = 1.0f - impactTime;
 		m_x += m_dx * remainingTime;
 		m_y += m_dy * remainingTime;
@@ -266,8 +266,8 @@ private:
 		float ballCenterX = (ballAABB.minX + ballAABB.maxX) * 0.5f;
 		float ballCenterY = (ballAABB.minY + ballAABB.maxY) * 0.5f;
 
-		float dx = ballCenterX - collisionPoint.x;
-		float dy = ballCenterY - collisionPoint.y;
+		float dx = ballCenterX - collisionPoint.x();
+		float dy = ballCenterY - collisionPoint.y();
 
 		if (std::abs(dx) > std::abs(dy))
 			return (dx > 0) ? Cypher::Vector2f(1, 0) : Cypher::Vector2f(-1, 0);
@@ -277,8 +277,8 @@ private:
 
 	Cypher::Vector2f Reflect(float dx, float dy, const Cypher::Vector2f& normal)
 	{
-		float dotProduct = dx * normal.x + dy * normal.y;
-		return Cypher::Vector2f(dx - 2 * dotProduct * normal.x, dy - 2 * dotProduct * normal.y);
+		float dotProduct = dx * normal.x() + dy * normal.y();
+		return Cypher::Vector2f(dx - 2 * dotProduct * normal.x(), dy - 2 * dotProduct * normal.y());
 	}
 
 	float m_torque;
@@ -454,36 +454,36 @@ private:
 	std::vector<Entity*> m_entities;
 };
 
-class Game : public Cypher::Application
-{
-public:
-   Game() : m_level()
-   {
-      m_config.windowTitle = L"Breakout";
-   }
-
-	virtual ~Game() = default;
-   
-	bool Initialize() override
-	{
-		return true;
-	}
-   
-   void Update(float deltaTime) override
-   {
-      m_level.Update(deltaTime);
-   }
-	
-	void FixedUpdate(float timeStep) override
-	{
-		m_level.FixedUpdate(timeStep);
-	}
-
-   void Render() override
-   {
-      m_level.Render();
-   }
-   
-private:
-   Level m_level;
-};
+//class Game : public Cypher::Application
+//{
+//public:
+//   Game() : m_level()
+//   {
+//      m_config.windowTitle = L"Breakout";
+//   }
+//
+//	virtual ~Game() = default;
+//   
+//	bool Initialize() override
+//	{
+//		return true;
+//	}
+//   
+//   void Update(float deltaTime) override
+//   {
+//      m_level.Update(deltaTime);
+//   }
+//	
+//	void FixedUpdate(float timeStep) override
+//	{
+//		m_level.FixedUpdate(timeStep);
+//	}
+//
+//   void Render() override
+//   {
+//      m_level.Render();
+//   }
+//   
+//private:
+//   Level m_level;
+//};

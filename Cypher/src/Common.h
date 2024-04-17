@@ -9,16 +9,13 @@
 #ifdef CYAPI
    #undef CYAPI
 #endif
-//#ifdef CYPHER_EXPORTS
-//   #define CYAPI __declspec(dllexport)
-//#else
-//   #define CYAPI __declspec(dllimport)
-//#endif
 #ifdef _WIN32
    #define CYAPI __declspec(dllexport)
 #else
    #define CYAPI __attribute__ ((visibility ("default")))
 #endif
+
+#define CYAPI_EXTERN extern "C" CYAPI
 
 #define Assert(predicate) assert(predicate)
 

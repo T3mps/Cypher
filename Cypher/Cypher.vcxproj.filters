@@ -13,9 +13,6 @@
     <Filter Include="Math">
       <UniqueIdentifier>{AFF4887C-9B2B-8A0D-4418-7010302E060F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Memory">
-      <UniqueIdentifier>{BE94DDC2-AA36-0899-93F1-1BED7F328FE9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Rendering">
       <UniqueIdentifier>{E3AE1F7C-4F19-D4F2-9857-85980401B247}</UniqueIdentifier>
     </Filter>
@@ -54,17 +51,8 @@
     <ClInclude Include="src\Math\Math.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\Vector2.h">
+    <ClInclude Include="src\Math\Vector.h">
       <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Memory\BlockAllocator.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Memory\Memory.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Memory\StackAllocator.h">
-      <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Animation.h">
       <Filter>Rendering</Filter>
@@ -84,20 +72,30 @@
     <ClInclude Include="src\Util\YCombinator.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\Math\Matrix.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\GLMBridge.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\StringUtil.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Types.h" />
+    <ClInclude Include="src\Util\picosha2.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util\Hash.h">
+      <Filter>Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Math\AABB.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Vector2.cpp">
+    <ClCompile Include="src\Math\Vector.cpp">
       <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Memory\BlockAllocator.cpp">
-      <Filter>Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Memory\StackAllocator.cpp">
-      <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Animation.cpp">
       <Filter>Rendering</Filter>
@@ -107,6 +105,12 @@
     </ClCompile>
     <ClCompile Include="src\Rendering\TextRenderer.cpp">
       <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Matrix.cpp">
+      <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util\StringUtil.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

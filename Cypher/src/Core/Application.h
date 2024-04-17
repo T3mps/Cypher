@@ -2,6 +2,8 @@
 
 #include <Windows.h>
 
+#include "Types.h"
+
 namespace Cypher
 {
    class Application
@@ -21,14 +23,13 @@ namespace Cypher
          SHORT fontHeight = DEFAULT_FONT_HEIGHT;
       };
 
+      Application() : m_config() {}
       virtual ~Application() = default;
-      
-      virtual bool Initialize() = 0;
-      virtual void Update(float deltaTime) = 0;
-      virtual void FixedUpdate(float timeStep) = 0;
+
+      virtual void Initialize() = 0;
+      virtual void Update(float32_t deltaTime) = 0;
+      virtual void FixedUpdate(float32_t timeStep) = 0;
       virtual void Render() = 0;
-      
-      const Config& GetConfig() const { return m_config; }
       
    protected:
       Config m_config;

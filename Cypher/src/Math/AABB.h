@@ -9,11 +9,12 @@
 #include <type_traits>
 
 #include "Common.h"
-#include "Vector2.h"
+#include "Types.h"
+#include "Vector.h"
 
 namespace Cypher
 {
-   template <typename T = double>
+   template <typename T = float64_t>
    class AABB
    {
    public:
@@ -118,7 +119,7 @@ namespace Cypher
 
       AABB<T> operator-() { return AABB<T>(-minX, -minY, -maxX, -maxY); }
 
-      T operator[](int index)
+      T operator[](int32_t index)
       {
          switch (index)
          {
@@ -130,7 +131,7 @@ namespace Cypher
          }
       }
 
-      const T operator[](int index) const
+      const T operator[](int32_t index) const
       {
          switch (index)
          {
@@ -183,7 +184,7 @@ namespace Cypher
          maxY += y;
       }
 
-      void Translate(const Vector2<T>& translation) { Translate(translation.x, translation.y); }
+      void Translate(const Vector2<T>& translation) { Translate(translation.x(), translation.y()); }
 
       AABB<T>& Union(const AABB<T>& aabb)
       {
@@ -255,9 +256,9 @@ namespace Cypher
       static AABB<T> One() { return AABB<T>(0, 0, 1, 1); }
    };
 
-   using AABBi = AABB<int>;
-   using AABBf = AABB<float>;
-   using AABBd = AABB<double>;
+   using AABBi = AABB<int32_t>;
+   using AABBf = AABB<float32_t>;
+   using AABBd = AABB<float64_t>;
 } // namespace Cypher
 
 namespace std

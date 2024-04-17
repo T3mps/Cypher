@@ -2,11 +2,8 @@
 
 int main()
 {
-   Loom loom(L"CypherTest.dll");
-   if (!loom.Initialize())
-      return 1;
-   
-   loom.Run();
-
+   Cypher::Loom loom(L"CypherTest.dll");
+   loom.Initialize();
+   loom.Start();
    return 0;
 }

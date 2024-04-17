@@ -7,7 +7,7 @@
 #include <string_view>
 #include <source_location>
 
-namespace Symphony
+namespace Cypher
 {
    enum class LogLevel
    {

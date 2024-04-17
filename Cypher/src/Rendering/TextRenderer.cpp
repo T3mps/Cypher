@@ -350,18 +350,18 @@ void Cypher::TextRenderer::DrawPolygon(const std::vector<Vector2f>& vertices, SH
 
 	for (const auto& vertex : vertices)
 	{
-		const float transformedX = (vertex.x * cosTheta - vertex.y * sinTheta) * scale + x;
-		const float transformedY = (vertex.y * cosTheta + vertex.x * sinTheta) * scale + y;
+		const float transformedX = (vertex.x() * cosTheta - vertex.y() * sinTheta) * scale + x;
+		const float transformedY = (vertex.y() * cosTheta + vertex.x() * sinTheta) * scale + y;
 		transformedVerticeList.emplace_back(transformedX, transformedY);
 	}
 
 	for (size_t i = 0; i < verticeCount; ++i)
 	{
 		size_t nextIndex = (i + 1) % verticeCount;
-		DrawLine(static_cast<SHORT>(transformedVerticeList[i].x),
-					static_cast<SHORT>(transformedVerticeList[i].y),
-					static_cast<SHORT>(transformedVerticeList[nextIndex].x),
-					static_cast<SHORT>(transformedVerticeList[nextIndex].y),
+		DrawLine(static_cast<SHORT>(transformedVerticeList[i].x()),
+					static_cast<SHORT>(transformedVerticeList[i].y()),
+					static_cast<SHORT>(transformedVerticeList[nextIndex].x()),
+					static_cast<SHORT>(transformedVerticeList[nextIndex].y()),
 					glyph, color);
 	}
 }
@@ -375,8 +375,8 @@ void Cypher::TextRenderer::FillPolygon(const std::vector<Vector2f>& verticeList,
 	for (const auto& vertex : verticeList)
 	{
 		Vector2f transformed;
-		transformed.x = (vertex.x * cosTheta - vertex.y * sinTheta) * scale + x;
-		transformed.y = (vertex.x * sinTheta + vertex.y * cosTheta) * scale + y;
+		transformed.x() = (vertex.x() * cosTheta - vertex.y() * sinTheta) * scale + x;
+		transformed.y() = (vertex.x() * sinTheta + vertex.y() * cosTheta) * scale + y;
 		transformedVertices.push_back(transformed);
 	}
 
@@ -394,10 +394,10 @@ void Cypher::TextRenderer::FillPolygon(const std::vector<Vector2f>& verticeList,
 	SHORT maxY = 0;
 	for (const auto& vertex : transformedVertices)
 	{
-		minX = std::min<SHORT>(minX, static_cast<SHORT>(vertex.x));
-		maxX = std::max<SHORT>(maxX, static_cast<SHORT>(vertex.x));
-		minY = std::min<SHORT>(minY, static_cast<SHORT>(vertex.y));
-		maxY = std::max<SHORT>(maxY, static_cast<SHORT>(vertex.y));
+		minX = std::min<SHORT>(minX, static_cast<SHORT>(vertex.x()));
+		maxX = std::max<SHORT>(maxX, static_cast<SHORT>(vertex.x()));
+		minY = std::min<SHORT>(minY, static_cast<SHORT>(vertex.y()));
+		maxY = std::max<SHORT>(maxY, static_cast<SHORT>(vertex.y()));
 	}
 
 	for (SHORT scanY = minY; scanY <= maxY; ++scanY)
@@ -408,11 +408,11 @@ void Cypher::TextRenderer::FillPolygon(const std::vector<Vector2f>& verticeList,
 			const auto& vCurrent = transformedVertices[i];
 			const auto& vPrevious = transformedVertices[j];
 
-			if (vCurrent.y < scanY && vPrevious.y >= scanY || vPrevious.y < scanY && vCurrent.y >= scanY)
+			if (vCurrent.y() < scanY && vPrevious.y() >= scanY || vPrevious.y() < scanY && vCurrent.y() >= scanY)
 			{
-				float slope = (vPrevious.x - vCurrent.x) / (vPrevious.y - vCurrent.y);
-				float deltaX = slope * (scanY - vCurrent.y);
-				SHORT node = static_cast<SHORT>(vCurrent.x + deltaX);
+				float slope = (vPrevious.x() - vCurrent.x()) / (vPrevious.y() - vCurrent.y());
+				float deltaX = slope * (scanY - vCurrent.y());
+				SHORT node = static_cast<SHORT>(vCurrent.x() + deltaX);
 				nodeX.push_back(node);
 			}
 		}

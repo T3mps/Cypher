@@ -121,7 +121,12 @@ workspace "Cypher"
         }  
 
         includedirs {
-            "%{IncludeDir.Cypher}"
+            "%{IncludeDir.Cypher}",
+            "%{IncludeDir.jemalloc}",
+            "%{IncludeDir.spdlog}",
+            "%{IncludeDir.glm}",
+            "%{IncludeDir.entt}",
+            "%{IncludeDir.box2d}"
         }
 
         links {
