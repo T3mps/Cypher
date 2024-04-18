@@ -453,37 +453,3 @@ private:
 
 	std::vector<Entity*> m_entities;
 };
-
-//class Game : public Cypher::Application
-//{
-//public:
-//   Game() : m_level()
-//   {
-//      m_config.windowTitle = L"Breakout";
-//   }
-//
-//	virtual ~Game() = default;
-//   
-//	bool Initialize() override
-//	{
-//		return true;
-//	}
-//   
-//   void Update(float deltaTime) override
-//   {
-//      m_level.Update(deltaTime);
-//   }
-//	
-//	void FixedUpdate(float timeStep) override
-//	{
-//		m_level.FixedUpdate(timeStep);
-//	}
-//
-//   void Render() override
-//   {
-//      m_level.Render();
-//   }
-//   
-//private:
-//   Level m_level;
-//};

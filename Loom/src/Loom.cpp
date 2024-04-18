@@ -1,5 +1,6 @@
 #include "Loom.h"
 
+#include "Console.h"
 #include "Module/ModuleLoader.h"
 #include "Module/ModuleContext.h"
 
@@ -24,17 +25,18 @@ void Cypher::Loom::Initialize()
       return;
    }
 
-   m_mainModule->InvokeFunction<FunctionInitialize>(FUNCTION_NAME_INITIALIZE);
+   Application app;
+   app.initializeFunction = m_mainModule->GetFunction<InitializeFunction>(FUNCTION_NAME_INITIALIZE);
+   app.updateFunction = m_mainModule->GetFunction<UpdateFunction>(FUNCTION_NAME_UPDATE);
+   app.fixedUpdateFunction = m_mainModule->GetFunction<UpdateFunction>(FUNCTION_NAME_FIXED_UPDATE);
+   app.renderFunction = m_mainModule->GetFunction<RenderFunction>(FUNCTION_NAME_RENDER);
+   
+   Console::Initialize(app);
 }
 
 void Cypher::Loom::Start()
 {
-   for (int i = 0; i < 10; i++)
-   {
-      m_mainModule->InvokeFunction<FunctionUpdate>(FUNCTION_NAME_UPDATE, i);
-      m_mainModule->InvokeFunction<FunctionUpdate>(FUNCTION_NAME_FIXED_UPDATE, i);
-      m_mainModule->InvokeFunction<FunctionRender>(FUNCTION_NAME_RENDER);
-   }
+   Console::Start();
 }
 
 void Cypher::Loom::LoadMainModule(const std::wstring& moduleName)
@@ -48,10 +50,10 @@ void Cypher::Loom::LoadMainModule(const std::wstring& moduleName)
    
    m_mainModule = module;
 
-   m_mainModule->RegisterFunction<FunctionInitialize>(FUNCTION_NAME_INITIALIZE);
-   m_mainModule->RegisterFunction<FunctionUpdate>(FUNCTION_NAME_UPDATE);
-   m_mainModule->RegisterFunction<FunctionUpdate>(FUNCTION_NAME_FIXED_UPDATE);
-   m_mainModule->RegisterFunction<FunctionRender>(FUNCTION_NAME_RENDER);
+   m_mainModule->RegisterFunction<InitializeFunction>(FUNCTION_NAME_INITIALIZE);
+   m_mainModule->RegisterFunction<UpdateFunction>(FUNCTION_NAME_UPDATE);
+   m_mainModule->RegisterFunction<UpdateFunction>(FUNCTION_NAME_FIXED_UPDATE);
+   m_mainModule->RegisterFunction<RenderFunction>(FUNCTION_NAME_RENDER);
 }
 
 Cypher::ModuleContext* Cypher::Loom::LoadModule(const std::wstring& moduleName)

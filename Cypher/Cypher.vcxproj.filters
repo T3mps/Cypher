@@ -32,9 +32,6 @@
     <ClInclude Include="src\Container\SparseSet.h">
       <Filter>Container</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Application.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\KeyCode.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -87,6 +84,12 @@
     </ClInclude>
     <ClInclude Include="src\Util\Hash.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Application.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Window.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

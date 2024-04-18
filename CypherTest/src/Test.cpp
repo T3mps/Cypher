@@ -1,10 +1,12 @@
 #include <iostream>
 
 #include "Common.h"
+#include "Core/Logger.h"
 
-CYAPI_EXTERN void Initialize()
+CYAPI_EXTERN bool Initialize()
 {
-   std::cout << "Initialize" << std::endl;
+   LOG_INFO("Initialize", " called.");
+   return true;
 }
 
 CYAPI_EXTERN void Update(float deltaTime)

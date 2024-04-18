@@ -1,5 +1,6 @@
 #pragma once
 
+#include <format>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -24,17 +25,25 @@ namespace Cypher
    public:
       virtual ~ILogger() = default;
 
-      virtual void Log(LogLevel level, std::string_view message, const std::source_location& location = std::source_location::current()) = 0;
+      template<typename... Args>
+      void Log(LogLevel level, const std::source_location& location, std::string_view format, Args&&... args)
+      {
+         auto formatted_message = std::vformat(format, std::make_format_args(std::forward<Args>(args)...));
+         LogImpl(level, formatted_message, location);
+      }
+
+   protected:
+      virtual void LogImpl(LogLevel level, const std::string& message, const std::source_location& location) = 0;
    };
 
    class Logger : public ILogger
    {
-   public:
-      void Log(LogLevel level, std::string_view message, const std::source_location& location = std::source_location::current()) override
+   protected:
+      void LogImpl(LogLevel level, const std::string& message, const std::source_location& location) override
       {
-         std::cout << "[" << ToString(level) << "]["
-            << location.file_name() << ":" << location.line() << "] - "
-            << message << std::endl;
+         std::cout << "["<< ToString(level) << "]["
+                   << location.file_name() << ":" << location.line()
+                   << "] - " << message << std::endl;
       }
 
    private:
@@ -42,13 +51,13 @@ namespace Cypher
       {
          switch (level)
          {
-         case LogLevel::Trace: return "TRACE";
-         case LogLevel::Debug: return "DEBUG";
-         case LogLevel::Info:  return "INFO";
-         case LogLevel::Warn:  return "WARN";
-         case LogLevel::Error: return "ERROR";
-         case LogLevel::Fatal: return "FATAL";
-         default:              return "UNKNOWN";
+            case LogLevel::Trace: return "TRACE";
+            case LogLevel::Debug: return "DEBUG";
+            case LogLevel::Info:  return "INFO";
+            case LogLevel::Warn:  return "WARN";
+            case LogLevel::Error: return "ERROR";
+            case LogLevel::Fatal: return "FATAL";
+            default:              return "UNKNOWN";
          }
       }
    };
@@ -89,9 +98,9 @@ namespace Cypher
    };
 }
 
-#define LOG_TRACE(message) LogManager::GetLogger().Log(LogLevel::Trace, message, std::source_location::current())
-#define LOG_DEBUG(message) LogManager::GetLogger().Log(LogLevel::Debug, message, std::source_location::current())
-#define LOG_INFO(message)  LogManager::GetLogger().Log(LogLevel::Info,  message, std::source_location::current())
-#define LOG_WARN(message)  LogManager::GetLogger().Log(LogLevel::Warn,  message, std::source_location::current())
-#define LOG_ERROR(message) LogManager::GetLogger().Log(LogLevel::Error, message, std::source_location::current())
-#define LOG_FATAL(message) LogManager::GetLogger().Log(LogLevel::Fatal, message, std::source_location::current())
+#define LOG_TRACE(fmt, ...) Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Trace, std::source_location::current(), fmt, ##__VA_ARGS__)
+#define LOG_DEBUG(fmt, ...) Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Debug, std::source_location::current(), fmt, ##__VA_ARGS__)
+#define LOG_INFO(fmt, ...)  Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Info,  std::source_location::current(), fmt, ##__VA_ARGS__)
+#define LOG_WARN(fmt, ...)  Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Warn,  std::source_location::current(), fmt, ##__VA_ARGS__)
+#define LOG_ERROR(fmt, ...) Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Error, std::source_location::current(), fmt, ##__VA_ARGS__)
+#define LOG_FATAL(fmt, ...) Cypher::LogManager::GetLogger().Log(Cypher::LogLevel::Fatal, std::source_location::current(), fmt, ##__VA_ARGS__)

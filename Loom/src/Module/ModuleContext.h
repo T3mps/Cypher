@@ -40,6 +40,26 @@ namespace Cypher
          m_functions[functionName] = reinterpret_cast<FunctionPtr>(func);
       }
 
+      template<typename Func>
+      Func GetFunction(const Module::identifier_t functionName) const
+      {
+         auto it = m_functions.find(functionName);
+         if (it == m_functions.end())
+         {
+            // TODO: Log error
+            return nullptr;
+         }
+
+         auto& function = it->second;
+         if (!function)
+         {
+            // TODO: Log error
+            return nullptr;
+         }
+         
+         return reinterpret_cast<Func>(function);
+      }
+
       template<typename Func, typename... Args>
       bool InvokeFunction(Module::identifier_t functionName, Args... args)
       {

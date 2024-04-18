@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <vector>
 
+#include "Core/Logger.h"
 #include "Types.h"
 
 namespace Cypher
@@ -21,17 +22,18 @@ namespace Cypher
       {
          if (!m_hModule)
          {
-            // TODO: Log error
+            LOG_ERROR("Attempting to get function \"", functionName, "\" from a null module. Try loading the module first.");
             return nullptr;
          }
 
          void* functionPtr = GetProcAddress(m_hModule, functionName);
          if (!functionPtr)
          {
-            // TODO: Log error
+            LOG_ERROR("Failed to get function \"", functionName, "\". Error code: ", GetLastError());
             return nullptr;
          }
 
+         LOG_INFO("Successfully retrieved function \"", functionName, "\".");
          return reinterpret_cast<Func>(functionPtr);
       }
 
@@ -39,7 +41,7 @@ namespace Cypher
       {
          if (!m_hModule)
          {
-            // TODO: Log error
+            LOG_ERROR("Attempting to get function \"", functionName, "\" from a null module. Try loading the module first.");
             return false;
          }
 
